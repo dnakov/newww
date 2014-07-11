@@ -4,7 +4,7 @@ var Hapi = require('hapi'),
     log = require('bole')('user-forgot'),
     uuid = require('node-uuid');
 
-var from, devMode;
+var from, devMode, mailer;
 
 var ONE_HOUR = 60 * 60 * 1000; // in milliseconds
 
@@ -30,9 +30,9 @@ module.exports = function (options) {
     }
 
     if (!devMode) {
-      var nodemailer = require('nodemailer'),
-          mailer = nodemailer.createTransport(options.mailTransportType,
-                                              options.mailTransportSettings);
+      var nodemailer = require('nodemailer');
+      mailer = nodemailer.createTransport(options.mailTransportType,
+                                          options.mailTransportSettings);
     }
 
     if (request.method === 'post') {
